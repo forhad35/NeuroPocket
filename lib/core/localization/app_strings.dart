@@ -20,7 +20,7 @@ class AppStrings {
   bool get isBangla => language == AppLanguage.bangla;
 
   // App General
-  String get appTitle => isBangla ? 'অফলাইন এআই রাইটিং ও চ্যাট' : 'Offline AI Writing & Chat';
+  String get appTitle => isBangla ? 'NeuroPocket - অফলাইন এআই' : 'NeuroPocket - Offline AI';
   String get onDeviceBadge => isBangla ? '১০০% অন-ডিভাইস' : '100% On-Device';
   String get offlineMode => isBangla ? 'অফলাইন মোড' : 'Offline Mode';
   String get languageTitle => isBangla ? 'অ্যাপের ভাষা' : 'App Language';
@@ -84,8 +84,8 @@ class AppStrings {
   String get chatTitle => isBangla ? 'অফলাইন এআই চ্যাট' : 'Offline AI Chat';
   String get chatPlaceholder => isBangla ? 'এআই-কে প্রশ্ন করুন বা কিছু লিখুন...' : 'Ask AI or type a sentence...';
   String get chatGreeting => isBangla
-      ? 'আমি আপনার স্মার্ট অন-ডিভাইস এআই সহকারী (Offline AI Assistant)।\n\nআপনি আমাকে যেকোনো প্রশ্ন করতে পারেন, কোনো টেক্সট কারেক্ট বা রিরাইট করতে বলতে পারেন, অথবা বাংলা ও ইংরেজিতে যেকোনো বিষয়ে সম্পূর্ণ অফলাইনে কথোপকথন করতে পারেন!'
-      : 'I am your smart offline on-device AI assistant.\n\nYou can ask me questions, request grammar corrections, translate text, or have a fluent conversation in English and Bengali completely offline!';
+      ? 'আমি আপনার স্মার্ট অন-ডিভাইস এআই সহকারী (NeuroPocket AI)।\n\nআপনি আমাকে যেকোনো প্রশ্ন করতে পারেন, কোনো টেক্সট কারেক্ট বা রিরাইট করতে বলতে পারেন, অথবা বাংলা ও ইংরেজিতে যেকোনো বিষয়ে সম্পূর্ণ অফলাইনে কথোপকথন করতে পারেন!'
+      : 'I am your smart NeuroPocket on-device AI assistant.\n\nYou can ask me questions, request grammar corrections, translate text, or have a fluent conversation in English and Bengali completely offline!';
   String get quickPrompt1 => isBangla
       ? 'ম্যানেজারকে ছুটির জন্য একটি ভদ্র ইমেইল লিখে দাও'
       : 'Write a polite leave email to my manager';

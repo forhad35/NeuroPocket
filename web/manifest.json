@@ -1,11 +1,14 @@
 {
     "name": "flutter_ai",
     "short_name": "flutter_ai",
+    "name": "NeuroPocket",
+    "short_name": "NeuroPocket",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
     "description": "A new Flutter project.",
+    "description": "NeuroPocket - 100% On-Device AI Writing & Assistant.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -1,17 +1,10 @@
-# flutter_ai
+# NeuroPocket
 
-A new Flutter project.
+**NeuroPocket** is a 100% offline, privacy-first on-device AI writing, grammar fixing, restructuring, OCR scanning, and intelligent chat assistant powered by local GGUF models (`Qwen 2.5`, `SmolLM2`, `Llama 3.2`) with optional Google Gemini cloud support.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ✨ Features
+- **100% Offline AI Inference**: Runs directly on your device with no internet connection required.
+- **AI Writing Assistant**: Grammar fix, natural phrasing, 3 tone alternatives, paragraph proofreading, and multilingual polite rewrites.
+- **Offline OCR Scanner**: Extract text from camera/gallery and format broken lines.
+- **Dual-Language Support**: Seamless 1-tap toggle between **English** and **বাংলা** (Bangla).
+- **Intelligent Chat**: On-device conversational AI supporting English, Bengali, and Banglish.

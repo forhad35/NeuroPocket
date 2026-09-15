@@ -10,6 +10,7 @@
 
     <application
         android:label="flutter_ai"
+        android:label="NeuroPocket"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">

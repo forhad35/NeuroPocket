@@ -1,0 +1,45 @@
+name: flutter_ai
+description: "A Flutter AI Writing Assistant with OCR and Real LLM Integration."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management & Architecture
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.7
+
+  # Real AI Engine (Google Gemini AI Model)
+  google_generative_ai: ^0.4.6
+  shared_preferences: ^2.3.5
+
+  # Offline OCR (Image to Text)
+  google_mlkit_text_recognition: ^0.14.0
+  image_picker: ^1.1.2
+
+  # File Storage & Device Paths
+  path_provider: ^2.1.5
+
+  # Offline On-Device LLM (llama.cpp / GGUF)
+  llamadart: ^0.8.23
+  http: ^1.2.2
+
+  # UI & Feedback
+  flutter_spinkit: ^5.2.1
+  cupertino_icons: ^1.0.8
+  marionette_flutter: ^0.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

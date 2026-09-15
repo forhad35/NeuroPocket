@@ -133,3 +133,4 @@ class AppStrings {
       ? 'আপনি কি নিশ্চিত যে এই মডেলটি ডিভাইস থেকে মুছে ফেলতে চান?'
       : 'Are you sure you want to delete this model from disk?';
 }
+

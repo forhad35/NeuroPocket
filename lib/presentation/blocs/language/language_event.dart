@@ -24,3 +24,4 @@ class ChangeLanguageEvent extends LanguageEvent {
 class ToggleLanguageEvent extends LanguageEvent {
   const ToggleLanguageEvent();
 }
+

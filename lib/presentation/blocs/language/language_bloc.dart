@@ -58,3 +58,4 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
     add(ChangeLanguageEvent(nextLang));
   }
 }
+

@@ -13,3 +13,4 @@ extension AppLanguageExtension on AppLanguage {
   bool get isBangla => this == AppLanguage.bangla;
   bool get isEnglish => this == AppLanguage.english;
 }
+

@@ -749,7 +749,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
               const SizedBox(width: 10),
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: _selectedGeminiModel,
+                  initialValue: _selectedGeminiModel,
                   isDense: true,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),

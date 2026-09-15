@@ -23,8 +23,31 @@ class AppStrings {
   String get appTitle => isBangla ? 'NeuroPocket - অফলাইন এআই' : 'NeuroPocket - Offline AI';
   String get onDeviceBadge => isBangla ? '১০০% অন-ডিভাইস' : '100% On-Device';
   String get offlineMode => isBangla ? 'অফলাইন মোড' : 'Offline Mode';
+  String get offlineReadyBadge => isBangla ? '১০০% অফলাইন এআই প্রস্তুত' : '100% Offline AI Ready';
+  String get heroStatus => offlineReadyBadge;
+  String get modelsButton => isBangla ? 'মডেল' : 'Models';
   String get languageTitle => isBangla ? 'অ্যাপের ভাষা' : 'App Language';
+  String get languageSubtitle => isBangla
+      ? 'বাংলা ও ইংরেজি ভাষার মধ্যে নির্বাচন করুন'
+      : 'Choose between Bengali and English language';
   String get switchLanguage => isBangla ? 'English এ পরিবর্তন করুন' : 'Switch to বাংলা';
+
+  // Home Screen Sections
+  String get toolsSectionTitle => isBangla ? 'এআই রাইটিং টুলস:' : 'AI Writing Tools:';
+  String get chatCardTitle => isBangla ? 'অফলাইন এআই চ্যাট' : 'Offline AI Chat';
+  String get chatCardDesc => isBangla
+      ? 'মডেলের সাথে যেকোনো বিষয়ে বাংলা ও ইংরেজিতে প্রশ্ন-উত্তর ও কথোপকথন করুন'
+      : 'Chat and have fluent conversations with on-device AI in English and Bengali';
+  String get ocrCardTitle => isBangla ? 'ওসিআর ডকুমেন্ট স্ক্যানার' : 'OCR Document Scanner';
+  String get ocrCardDesc => isBangla
+      ? 'ছবি থেকে টেক্সট এক্সট্রাক্ট করে অফলাইনে এআই দিয়ে ফরম্যাট করুন'
+      : 'Extract text from images and format with offline AI';
+  String get quickExamplesTitle => isBangla ? 'দ্রুত টেস্ট করার জন্য উদাহরণ:' : 'Quick Test Examples:';
+  String get grammarExampleTitle => isBangla ? 'গ্রামার ফিক্স উদাহরণ' : 'Grammar Fix Example';
+  String get altExampleTitle => isBangla ? 'বিকল্প বাক্যের উদাহরণ' : 'Alternative Suggestions Example';
+  String get naturalExampleTitle => isBangla ? 'ন্যাচারাল ফ্রেজিং উদাহরণ' : 'Natural Phrasing Example';
+  String get multilingualExampleTitle => isBangla ? 'ভদ্র ও প্রফেশনাল রি-রাইট' : 'Polite & Professional Rewrite';
+  String get ocrCleanExampleTitle => isBangla ? 'ওসিআর ক্লিন ও ফরম্যাটিং' : 'OCR Cleanup & Formatting';
 
   // Navigation
   String get navEditor => isBangla ? 'এআই রাইটার' : 'AI Writer';
@@ -42,6 +65,7 @@ class AppStrings {
       : 'Type or paste your sentence or paragraph here...';
   String get buttonAnalyze => isBangla ? 'প্রসেস ও জেনারেট করুন' : 'Analyze & Generate';
   String get processingAi => isBangla ? 'অন-ডিভাইস এআই প্রসেসিং হচ্ছে...' : 'Processing with on-device AI...';
+  String get analyzingText => isBangla ? 'অন-ডিভাইস এআই মডেল টেক্সট অ্যানালাইসিস করছে...' : 'Analyzing text with on-device AI model...';
   String get resultTitle => isBangla ? 'এআই ফলাফল ও সংশোধন' : 'AI Results & Improvements';
   String get originalText => isBangla ? 'মূল টেক্সট' : 'Original Text';
   String get correctedText => isBangla ? 'সংশোধিত টেক্সট' : 'Corrected Text';
@@ -51,14 +75,21 @@ class AppStrings {
   String get copied => isBangla ? 'ক্লিপবোর্ডে কপি করা হয়েছে!' : 'Copied to clipboard!';
   String get clear => isBangla ? 'মুছুন' : 'Clear';
   String get selectTask => isBangla ? 'কাজের ধরণ নির্বাচন করুন:' : 'Select Task Type:';
+  String get paste => isBangla ? 'পেস্ট' : 'Paste';
+  String get textPasted => isBangla ? 'টেক্সট পেস্ট করা হয়েছে!' : 'Text pasted!';
+  String get textFromImageAdded => isBangla ? 'ছবি থেকে টেক্সট সফলভাবে এডিটরে আনা হয়েছে!' : 'Text from image added to editor!';
+  String get applyToEditor => isBangla ? 'এডিটরে প্রয়োগ করুন' : 'Apply to Editor';
+  String get appliedToEditor => isBangla ? 'ইনপুটে নতুন টেক্সট যুক্ত করা হয়েছে!' : 'Text applied to input editor!';
+  String get showDiff => isBangla ? 'পার্থক্য (Diff) দেখুন' : 'Show Word Diff';
+  String wordCountLabel(int words, int chars) => isBangla ? '$words শব্দ • $chars অক্ষর' : '$words words • $chars chars';
 
   // Task Type Names
-  String get taskGrammarCheck => isBangla ? 'ব্যাকরণ সংশোধন' : 'Grammar Fix';
-  String get taskNaturalPhrasing => isBangla ? 'স্বাভাবিক ভাব' : 'Natural Tone';
-  String get taskAlternatives => isBangla ? '৩টি বিকল্প বাক্য' : '3 Alternatives';
+  String get taskGrammarCheck => isBangla ? 'গ্রামার চেক' : 'Grammar Fix';
+  String get taskNaturalPhrasing => isBangla ? 'ন্যাচারাল ফ্রেজিং' : 'Natural Tone';
+  String get taskAlternatives => isBangla ? 'বিকল্প বাক্য' : '3 Alternatives';
   String get taskParagraphProofread => isBangla ? 'প্যারাগ্রাফ প্রুফরিড' : 'Proofreading';
-  String get taskOcrStructuring => isBangla ? 'ডকুমেন্ট ফরম্যাট' : 'Doc Structure';
-  String get taskMultilingualRewrite => isBangla ? 'ভদ্র ও বিজনেস টোন' : 'Polite / Business';
+  String get taskOcrStructuring => isBangla ? 'ওসিআর টেক্সট ক্লিন' : 'Doc Structure';
+  String get taskMultilingualRewrite => isBangla ? 'পেশাদার রি-রাইট' : 'Polite / Business';
 
   // Task Descriptions
   String get taskGrammarDesc => isBangla
@@ -96,28 +127,46 @@ class AppStrings {
       ? 'আমি ভালো আছি এটা ইংরেজিতে অনুবাদ করো'
       : 'Translate "ami valo achi" to English';
   String get clearChat => isBangla ? 'চ্যাট ক্লিয়ার করুন' : 'Clear Chat';
+  String get clearConfirmTitle => isBangla ? 'কথোপকথন মুছে ফেলবেন?' : 'Clear Conversation?';
+  String get clearConfirmBody => isBangla
+      ? 'আপনার বর্তমান চ্যাট হিস্ট্রি মুছে নতুন সেশন শুরু হবে।'
+      : 'Your current chat history will be cleared and a new session will begin.';
+  String get yesClear => isBangla ? 'হ্যাঁ, মুছে ফেলুন' : 'Clear';
+  String get cancelAction => isBangla ? 'বাতিল' : 'Cancel';
+  String get thinkingOffline => isBangla ? 'অন-ডিভাইসে ভাবছে...' : 'Thinking offline...';
+  String get sendMessageTooltip => isBangla ? 'মেসেজ পাঠান' : 'Send Message';
 
   // OCR View
   String get ocrTitle => isBangla ? 'ওসিআর ডকুমেন্ট স্ক্যানার' : 'OCR Document Scanner';
   String get ocrSubtitle => isBangla
       ? 'ছবি থেকে টেক্সট এক্সট্রাক্ট করে অফলাইনে এআই দিয়ে ফরম্যাট করুন'
       : 'Extract text from images and format with offline AI';
+  String get offlineOcrHeader => isBangla ? '১০০% অফলাইন টেক্সট রিকগনিশন' : '100% Offline OCR Recognition';
   String get scanCamera => isBangla ? 'ক্যামেরা স্ক্যান' : 'Camera Scan';
   String get pickGallery => isBangla ? 'গ্যালারি থেকে ছবি' : 'Gallery Image';
   String get recognizedText => isBangla ? 'শনাক্তকৃত টেক্সট' : 'Recognized Text';
   String get noTextFound => isBangla
       ? 'কোনো ছবি নির্বাচন করা হয়নি। ক্যামেরা বা গ্যালারি থেকে ছবি নিন।'
       : 'No image selected. Capture from camera or pick from gallery.';
+  String get scanningImage => isBangla ? 'ছবি থেকে অফলাইনে লেখা স্ক্যান করা হচ্ছে...' : 'Scanning text offline from image...';
+  String get noOcrText => isBangla
+      ? 'ছবিতে কোনো স্পষ্ট লেখা পাওয়া যায়নি। লেখা সম্বলিত ছবি দিন।'
+      : 'No clear text detected in image. Please provide a clear image.';
   String get sendToEditor => isBangla ? 'এআই এডিটরে পাঠান' : 'Send to AI Editor';
+  String get cleanWithAi => isBangla ? '⚡ AI দিয়ে টেক্সট সাজান ও ক্লিন করুন' : '⚡ Clean & Structure with AI';
+  String get fixWithAiTitle => isBangla ? 'AI দিয়ে ঠিক করুন (এক ক্লিকে এডিটর খুলুন):' : 'Fix with AI (Open in Editor):';
 
   // Model Manager & Settings
   String get modelsTitle => isBangla ? 'অন-ডিভাইস লোকাল GGUF মডেলসমূহ' : 'On-Device Local GGUF Models';
+  String get refreshModelStatus => isBangla ? 'মডেল স্ট্যাটাস রিফ্রেশ' : 'Refresh Model Status';
+  String get modelLabel => isBangla ? 'মডেল:' : 'Model:';
   String get geminiTitle => isBangla ? 'গুগল জেমিনি ক্লাউড এআই (ঐচ্ছিক)' : 'Google Gemini Cloud AI (Optional)';
   String get geminiDesc => isBangla
       ? 'ক্লাউড সুপার-ইন্টেলিজেন্স ব্যবহারের জন্য আপনার ফ্রি জেমিনি এপিআই কি দিন।'
       : 'Add your free Gemini API key to use cloud super-intelligence alongside offline models.';
   String get geminiKeyLabel => isBangla ? 'জেমিনি এপিআই কী (API Key)' : 'Gemini API Key';
   String get saveKey => isBangla ? 'কী সংরক্ষণ করুন' : 'Save Key';
+  String get testConnection => isBangla ? 'সংযোগ টেস্ট করুন' : 'Test Connection';
   String get testInferenceTitle => isBangla ? 'অন-ডিভাইস লাইভ টেস্ট' : 'Live On-Device GGUF Test';
   String get activeModelLabel => isBangla ? 'বর্তমান সক্রিয় মডেল:' : 'Active Model:';
   String get testPromptLabel => isBangla ? 'টেস্ট প্রম্পট' : 'Test Prompt';

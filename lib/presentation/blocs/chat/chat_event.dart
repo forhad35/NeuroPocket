@@ -8,16 +8,21 @@ abstract class ChatEvent extends Equatable {
 }
 
 class ChatStarted extends ChatEvent {
-  const ChatStarted();
+  final bool isBangla;
+  const ChatStarted({this.isBangla = false});
+
+  @override
+  List<Object?> get props => [isBangla];
 }
 
 class ChatMessageSent extends ChatEvent {
   final String message;
+  final bool isBangla;
 
-  const ChatMessageSent(this.message);
+  const ChatMessageSent(this.message, {this.isBangla = false});
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, isBangla];
 }
 
 class ChatHistoryCleared extends ChatEvent {
@@ -32,4 +37,3 @@ class ChatSuggestedPromptTapped extends ChatEvent {
   @override
   List<Object?> get props => [prompt];
 }
-

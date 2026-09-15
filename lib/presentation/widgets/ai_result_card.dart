@@ -71,7 +71,7 @@ class _AiResultCardState extends State<AiResultCard> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  result.taskType.title,
+                  strings.isBangla ? result.taskType.banglaTitle : result.taskType.title,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
@@ -120,7 +120,7 @@ class _AiResultCardState extends State<AiResultCard> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        strings.isBangla ? 'পার্থক্য (Diff) দেখুন' : 'Show Word Diff',
+                        strings.showDiff,
                         style: TextStyle(
                           fontSize: 12,
                           color: theme.textTheme.bodySmall?.color,
@@ -257,7 +257,7 @@ class _AiResultCardState extends State<AiResultCard> {
                   ElevatedButton.icon(
                     onPressed: widget.onApplyToEditor,
                     icon: const Icon(Icons.check_rounded, size: 16),
-                    label: Text(strings.isBangla ? 'এডিটরে প্রয়োগ করুন' : 'Apply to Editor'),
+                    label: Text(strings.applyToEditor),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: result.taskType.badgeColor,
                       foregroundColor: Colors.white,

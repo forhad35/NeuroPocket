@@ -77,7 +77,7 @@ class _AiEditorViewState extends State<AiEditorView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(strings.isBangla ? 'টেক্সট পেস্ট করা হয়েছে!' : 'Text pasted!'),
+            content: Text(strings.textPasted),
             duration: AppConstants.toastDuration,
           ),
         );
@@ -104,9 +104,7 @@ class _AiEditorViewState extends State<AiEditorView> {
               });
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(strings.isBangla
-                      ? 'ছবি থেকে টেক্সট সফলভাবে এডিটরে আনা হয়েছে!'
-                      : 'Text from image added to editor!'),
+                  content: Text(strings.textFromImageAdded),
                   backgroundColor: AppConstants.accentColor,
                   duration: AppConstants.toastDuration,
                 ),
@@ -205,7 +203,9 @@ class _AiEditorViewState extends State<AiEditorView> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              aiState.currentTaskType.description,
+                              strings.isBangla
+                                  ? aiState.currentTaskType.banglaDescription
+                                  : aiState.currentTaskType.description,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: theme.textTheme.bodyMedium?.color?.withAlpha(200),
@@ -273,7 +273,7 @@ class _AiEditorViewState extends State<AiEditorView> {
                             child: Row(
                               children: [
                                 Text(
-                                  '$_wordCount words • $_charCount chars',
+                                  strings.wordCountLabel(_wordCount, _charCount),
                                   style: TextStyle(
                                     fontSize: 11.5,
                                     fontWeight: FontWeight.w500,
@@ -293,7 +293,7 @@ class _AiEditorViewState extends State<AiEditorView> {
                                           const Icon(Icons.paste_rounded, size: 14, color: AppConstants.primaryColor),
                                           const SizedBox(width: 4),
                                           Text(
-                                            strings.isBangla ? 'পেস্ট' : 'Paste',
+                                            strings.paste,
                                             style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w600,
@@ -363,7 +363,7 @@ class _AiEditorViewState extends State<AiEditorView> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'অন-ডিভাইস এআই মডেল টেক্সট অ্যানালাইসিস করছে...',
+                              strings.analyzingText,
                               style: TextStyle(
                                 fontSize: 13,
                                 color: theme.textTheme.bodySmall?.color,
@@ -385,8 +385,8 @@ class _AiEditorViewState extends State<AiEditorView> {
                               _textController.text = aiState.result!.correctedText;
                             });
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('ইনপুটে নতুন টেক্সট যুক্ত করা হয়েছে!'),
+                              SnackBar(
+                                content: Text(strings.appliedToEditor),
                                 duration: AppConstants.toastDuration,
                               ),
                             );
@@ -407,4 +407,3 @@ class _AiEditorViewState extends State<AiEditorView> {
     );
   }
 }
-

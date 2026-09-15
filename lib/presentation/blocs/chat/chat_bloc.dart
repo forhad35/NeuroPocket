@@ -18,7 +18,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   void _onChatStarted(ChatStarted event, Emitter<ChatState> emit) {
     if (state is ChatInitial || state.messages.isEmpty) {
-      final initialMessages = _repository.getInitialMessages();
+      final initialMessages = _repository.getInitialMessages(isBangla: event.isBangla);
       emit(ChatLoaded(messages: initialMessages));
     }
   }
@@ -50,6 +50,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       final aiResponse = await _repository.sendMessage(
         prompt: text,
         conversationHistory: currentMessages,
+        isBangla: event.isBangla,
       );
 
       final updatedMessages = List<ChatMessage>.from(currentMessages)..add(aiResponse);

@@ -212,7 +212,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.refresh_rounded, size: 20),
-                    tooltip: 'Refresh Model Status',
+                    tooltip: strings.refreshModelStatus,
                     onPressed: () {
                       context.read<ModelManagerBloc>().add(const CheckModelsStatusEvent());
                     },
@@ -276,9 +276,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
                       ),
                     ),
                     Text(
-                      strings.isBangla
-                          ? 'বাংলা ও ইংরেজি ভাষার মধ্যে নির্বাচন করুন'
-                          : 'Choose between Bengali and English language',
+                      strings.languageSubtitle,
                       style: TextStyle(
                         fontSize: 11.5,
                         color: theme.textTheme.bodyMedium?.color?.withAlpha(160),
@@ -427,6 +425,10 @@ class _ModelManagerViewState extends State<ModelManagerView> {
     final isDownloading = model.state == LocalModelState.downloading;
     final isReady = isDownloaded && !isActive;
 
+    final badgeText = (strings.isBangla ? model.banglaBadge : model.badge) ?? model.badge;
+    final bestForText = (strings.isBangla ? model.banglaBestFor : model.bestFor) ?? model.bestFor;
+    final descriptionText = strings.isBangla ? (model.banglaDescription ?? model.description) : model.description;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(16),
@@ -457,7 +459,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
                         fontSize: 14.5,
                       ),
                     ),
-                    if (model.badge != null) ...[
+                    if (badgeText != null) ...[
                       const SizedBox(height: 4),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
@@ -469,7 +471,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
-                          model.badge!,
+                          badgeText,
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
@@ -508,7 +510,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
           const SizedBox(height: 10),
 
           // Best for section
-          if (model.bestFor != null) ...[
+          if (bestForText != null) ...[
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(
@@ -544,7 +546,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
                               color: AppConstants.primaryColor,
                             ),
                           ),
-                          TextSpan(text: model.bestFor!),
+                          TextSpan(text: bestForText),
                         ],
                       ),
                     ),
@@ -556,7 +558,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
           ],
 
           Text(
-            model.description,
+            descriptionText,
             style: TextStyle(
               fontSize: 12,
               color: theme.textTheme.bodyMedium?.color?.withAlpha(180),
@@ -742,9 +744,9 @@ class _ModelManagerViewState extends State<ModelManagerView> {
 
           Row(
             children: [
-              const Text(
-                'Model:',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+              Text(
+                strings.modelLabel,
+                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -780,7 +782,7 @@ class _ModelManagerViewState extends State<ModelManagerView> {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.bolt, size: 16),
-                  label: Text(strings.isBangla ? 'সংযোগ টেস্ট করুন' : 'Test Connection'),
+                  label: Text(strings.testConnection),
                 ),
               ),
               const SizedBox(width: 10),

@@ -100,14 +100,14 @@ class HomeView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: Colors.white.withAlpha(80)),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.wifi_off_rounded, size: 14, color: Colors.white),
-                            SizedBox(width: 4),
+                            const Icon(Icons.wifi_off_rounded, size: 14, color: Colors.white),
+                            const SizedBox(width: 4),
                             Text(
-                              '100% Offline AI Ready',
-                              style: TextStyle(
+                              strings.offlineReadyBadge,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 11.5,
                                 fontWeight: FontWeight.w700,
@@ -126,13 +126,13 @@ class HomeView extends StatelessWidget {
                             color: Colors.white.withAlpha(40),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const Row(
+                          child: Row(
                             children: [
-                              Icon(Icons.settings, size: 13, color: Colors.white),
-                              SizedBox(width: 4),
+                              const Icon(Icons.settings, size: 13, color: Colors.white),
+                              const SizedBox(width: 4),
                               Text(
-                                'Models',
-                                style: TextStyle(color: Colors.white, fontSize: 11),
+                                strings.modelsButton,
+                                style: const TextStyle(color: Colors.white, fontSize: 11),
                               ),
                             ],
                           ),
@@ -165,7 +165,7 @@ class HomeView extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Chat & Conversation Action Card (NEW)
+            // Chat & Conversation Action Card
             InkWell(
               onTap: () => _openChat(context),
               borderRadius: BorderRadius.circular(16),
@@ -338,7 +338,7 @@ class HomeView extends StatelessWidget {
             const SizedBox(height: 22),
 
             Text(
-              strings.isBangla ? 'এআই রাইটিং টুলস:' : 'AI Writing Tools:',
+              strings.toolsSectionTitle,
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 15,
@@ -359,6 +359,9 @@ class HomeView extends StatelessWidget {
               itemCount: AiTaskType.values.length,
               itemBuilder: (context, index) {
                 final task = AiTaskType.values[index];
+                final taskTitle = strings.isBangla ? task.banglaTitle : task.title;
+                final taskSubtitle = strings.isBangla ? task.banglaSubtitle : task.subtitle;
+
                 return InkWell(
                   onTap: () => _openEditor(context, taskType: task),
                   borderRadius: BorderRadius.circular(16),
@@ -389,7 +392,7 @@ class HomeView extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          task.title,
+                          taskTitle,
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 14,
@@ -397,7 +400,7 @@ class HomeView extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          task.banglaTitle,
+                          taskSubtitle,
                           style: TextStyle(
                             fontSize: 11.5,
                             color: theme.textTheme.bodyMedium?.color?.withAlpha(160),
@@ -415,9 +418,9 @@ class HomeView extends StatelessWidget {
             const SizedBox(height: 22),
 
             // Quick Demo Examples
-            const Text(
-              'দ্রুত টেস্ট করার জন্য উদাহরণ:',
-              style: TextStyle(
+            Text(
+              strings.quickExamplesTitle,
+              style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 15,
               ),
@@ -425,7 +428,7 @@ class HomeView extends StatelessWidget {
             const SizedBox(height: 10),
 
             _DemoExampleTile(
-              title: 'Grammar Fix Example',
+              title: strings.grammarExampleTitle,
               text: 'He go to school yesterday and he are very happy.',
               taskType: AiTaskType.grammarCheck,
               onTap: () => _openEditor(
@@ -435,7 +438,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             _DemoExampleTile(
-              title: 'Alternative Suggestions Example',
+              title: strings.altExampleTitle,
               text: 'I want to say thanks for your help in this project.',
               taskType: AiTaskType.sentenceAlternatives,
               onTap: () => _openEditor(
@@ -445,7 +448,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             _DemoExampleTile(
-              title: 'Natural Phrasing Example',
+              title: strings.naturalExampleTitle,
               text: 'Make sure that you help me to finish the work.',
               taskType: AiTaskType.naturalPhrasing,
               onTap: () => _openEditor(
@@ -455,7 +458,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             _DemoExampleTile(
-              title: 'Polite & Professional Rewrite',
+              title: strings.multilingualExampleTitle,
               text: 'ami kalke office ashbo na karon amar shorir kharap',
               taskType: AiTaskType.multilingualRewrite,
               onTap: () => _openEditor(
@@ -465,7 +468,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             _DemoExampleTile(
-              title: 'OCR Cleanup & Formatting',
+              title: strings.ocrCleanExampleTitle,
               text: 'This is a demon-\nstration of the prod-\nuct. 1. Fast speed 2. High accuracy.',
               taskType: AiTaskType.ocrStructuring,
               onTap: () => _openEditor(

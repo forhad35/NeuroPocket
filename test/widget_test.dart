@@ -243,5 +243,14 @@ void main() {
 
     expect(find.byType(MaterialApp), findsOneWidget);
     expect(find.text('100% Offline AI Ready'), findsOneWidget);
+    expect(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is Text &&
+            (widget.data == '১০০% অফলাইন এআই প্রস্তুত' ||
+                widget.data == '100% Offline AI Ready'),
+      ),
+      findsOneWidget,
+    );
   });
 }

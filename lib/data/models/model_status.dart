@@ -14,8 +14,11 @@ class LocalModelInfo extends Equatable {
   final String name;
   final String size;
   final String description;
+  final String? banglaDescription;
   final String? bestFor;
+  final String? banglaBestFor;
   final String? badge;
+  final String? banglaBadge;
   final String downloadUrl;
   final String fileName;
   final String? localPath;
@@ -31,8 +34,11 @@ class LocalModelInfo extends Equatable {
     required this.name,
     required this.size,
     required this.description,
+    this.banglaDescription,
     this.bestFor,
+    this.banglaBestFor,
     this.badge,
+    this.banglaBadge,
     required this.downloadUrl,
     required this.fileName,
     this.localPath,
@@ -49,8 +55,11 @@ class LocalModelInfo extends Equatable {
     String? name,
     String? size,
     String? description,
+    String? banglaDescription,
     String? bestFor,
+    String? banglaBestFor,
     String? badge,
+    String? banglaBadge,
     String? downloadUrl,
     String? fileName,
     String? localPath,
@@ -66,8 +75,11 @@ class LocalModelInfo extends Equatable {
       name: name ?? this.name,
       size: size ?? this.size,
       description: description ?? this.description,
+      banglaDescription: banglaDescription ?? this.banglaDescription,
       bestFor: bestFor ?? this.bestFor,
+      banglaBestFor: banglaBestFor ?? this.banglaBestFor,
       badge: badge ?? this.badge,
+      banglaBadge: banglaBadge ?? this.banglaBadge,
       downloadUrl: downloadUrl ?? this.downloadUrl,
       fileName: fileName ?? this.fileName,
       localPath: localPath ?? this.localPath,
@@ -86,8 +98,11 @@ class LocalModelInfo extends Equatable {
         name,
         size,
         description,
+        banglaDescription,
         bestFor,
+        banglaBestFor,
         badge,
+        banglaBadge,
         downloadUrl,
         fileName,
         localPath,

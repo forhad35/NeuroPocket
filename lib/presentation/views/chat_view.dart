@@ -22,6 +22,7 @@ class _ChatViewState extends State<ChatView> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final FocusNode _focusNode = FocusNode();
+  bool _initialized = false;
 
   List<String> _getSuggestedPrompts(AppStrings strings) {
     if (strings.isBangla) {
@@ -43,9 +44,13 @@ class _ChatViewState extends State<ChatView> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    context.read<ChatBloc>().add(const ChatStarted());
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      final isBangla = AppStrings.of(context).isBangla;
+      context.read<ChatBloc>().add(ChatStarted(isBangla: isBangla));
+      _initialized = true;
+    }
   }
 
   @override
@@ -68,11 +73,11 @@ class _ChatViewState extends State<ChatView> {
     });
   }
 
-  void _sendMessage() {
+  void _sendMessage(bool isBangla) {
     final text = _textController.text.trim();
     if (text.isEmpty) return;
 
-    context.read<ChatBloc>().add(ChatMessageSent(text));
+    context.read<ChatBloc>().add(ChatMessageSent(text, isBangla: isBangla));
     _textController.clear();
     _scrollToBottom();
   }
@@ -86,21 +91,19 @@ class _ChatViewState extends State<ChatView> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(strings.isBangla ? 'কথোপকথন মুছে ফেলবেন?' : 'Clear Conversation?'),
-        content: Text(strings.isBangla
-            ? 'আপনার বর্তমান চ্যাট হিস্ট্রি মুছে নতুন সেশন শুরু হবে।'
-            : 'Your current chat history will be cleared and a new session will begin.'),
+        title: Text(strings.clearConfirmTitle),
+        content: Text(strings.clearConfirmBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(strings.isBangla ? 'না' : 'Cancel'),
+            child: Text(strings.cancelAction),
           ),
           FilledButton(
             onPressed: () {
               Navigator.of(ctx).pop();
               context.read<ChatBloc>().add(const ChatHistoryCleared());
             },
-            child: Text(strings.isBangla ? 'হ্যাঁ, মুছে ফেলুন' : 'Clear'),
+            child: Text(strings.yesClear),
           ),
         ],
       ),
@@ -181,10 +184,10 @@ class _ChatViewState extends State<ChatView> {
                     itemCount: messages.length + (state.isGenerating ? 1 : 0),
                     itemBuilder: (context, index) {
                       if (index == messages.length && state.isGenerating) {
-                        return _buildTypingIndicator(theme);
+                        return _buildTypingIndicator(theme, strings);
                       }
                       final msg = messages[index];
-                      return _buildMessageBubble(msg, theme);
+                      return _buildMessageBubble(msg, theme, strings);
                     },
                   );
                 },
@@ -201,13 +204,15 @@ class _ChatViewState extends State<ChatView> {
 
   Widget _buildSuggestionBar(ThemeData theme, AppStrings strings) {
     final prompts = _getSuggestedPrompts(strings);
-    return SizedBox(
+
+    return Container(
       height: 48,
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: prompts.length,
-        separatorBuilder: (context, index) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final prompt = prompts[index];
           return ActionChip(
@@ -225,7 +230,7 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 
-  Widget _buildMessageBubble(ChatMessage msg, ThemeData theme) {
+  Widget _buildMessageBubble(ChatMessage msg, ThemeData theme, AppStrings strings) {
     final isUser = msg.isUser;
     final isError = msg.isError;
 
@@ -305,9 +310,9 @@ class _ChatViewState extends State<ChatView> {
                           onTap: () {
                             Clipboard.setData(ClipboardData(text: msg.text));
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('টেক্সট কপি করা হয়েছে'),
-                                duration: Duration(seconds: 1),
+                              SnackBar(
+                                content: Text(strings.copied),
+                                duration: const Duration(seconds: 1),
                               ),
                             );
                           },
@@ -341,7 +346,7 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 
-  Widget _buildTypingIndicator(ThemeData theme) {
+  Widget _buildTypingIndicator(ThemeData theme, AppStrings strings) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
@@ -377,7 +382,7 @@ class _ChatViewState extends State<ChatView> {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  'Thinking offline...',
+                  strings.thinkingOffline,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                     fontStyle: FontStyle.italic,
@@ -435,7 +440,7 @@ class _ChatViewState extends State<ChatView> {
                 filled: true,
                 fillColor: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
               ),
-              onSubmitted: (_) => _sendMessage(),
+              onSubmitted: (_) => _sendMessage(strings.isBangla),
             ),
           ),
           const SizedBox(width: 8),
@@ -444,9 +449,9 @@ class _ChatViewState extends State<ChatView> {
               final isGenerating = state.isGenerating;
 
               return IconButton.filled(
-                onPressed: isGenerating ? null : _sendMessage,
+                onPressed: isGenerating ? null : () => _sendMessage(strings.isBangla),
                 icon: const Icon(Icons.send_rounded),
-                tooltip: 'Send Message',
+                tooltip: strings.sendMessageTooltip,
               );
             },
           ),

@@ -4,10 +4,11 @@ import '../services/gemini_ai_service.dart';
 import '../services/on_device_llm_service.dart';
 
 abstract class IChatRepository {
-  List<ChatMessage> getInitialMessages();
+  List<ChatMessage> getInitialMessages({bool isBangla = false});
   Future<ChatMessage> sendMessage({
     required String prompt,
     required List<ChatMessage> conversationHistory,
+    bool isBangla = false,
   });
   Stream<String> streamMessage({
     required String prompt,
@@ -26,12 +27,13 @@ class ChatRepository implements IChatRepository {
         _onDeviceLlmService = onDeviceLlmService ?? OnDeviceLlmService();
 
   @override
-  List<ChatMessage> getInitialMessages() {
+  List<ChatMessage> getInitialMessages({bool isBangla = false}) {
     return [
       ChatMessage(
         id: 'welcome_1',
-        text:
-            'আমি আপনার স্মার্ট অন-ডিভাইস এআই সহকারী (NeuroPocket AI)।\n\nআপনি আমাকে যেকোনো প্রশ্ন করতে পারেন, কোনো টেক্সট কারেক্ট বা রিরাইট করতে বলতে পারেন, অথবা বাংলা ও ইংরেজিতে যেকোনো বিষয়ে সম্পূর্ণ অফলাইনে কথোপকথন করতে পারেন!',
+        text: isBangla
+            ? 'আমি আপনার স্মার্ট অন-ডিভাইস এআই সহকারী (NeuroPocket AI)।\n\nআপনি আমাকে যেকোনো প্রশ্ন করতে পারেন, কোনো টেক্সট কারেক্ট বা রিরাইট করতে বলতে পারেন, অথবা বাংলা ও ইংরেজিতে যেকোনো বিষয়ে সম্পূর্ণ অফলাইনে কথোপকথন করতে পারেন!'
+            : 'I am your smart on-device AI assistant (NeuroPocket AI).\n\nYou can ask me any question, request grammar corrections or rewrites, or have full conversational discussions in 100% offline mode!',
         sender: MessageSender.ai,
         timestamp: DateTime.now(),
       ),
@@ -42,6 +44,7 @@ class ChatRepository implements IChatRepository {
   Future<ChatMessage> sendMessage({
     required String prompt,
     required List<ChatMessage> conversationHistory,
+    bool isBangla = false,
   }) async {
     final cleanPrompt = prompt.trim();
     if (cleanPrompt.isEmpty) {
@@ -81,7 +84,9 @@ class ChatRepository implements IChatRepository {
       id: 'msg_${DateTime.now().millisecondsSinceEpoch}',
       text: responseText.isNotEmpty
           ? responseText
-          : 'আমি আপনার অনুরোধটি প্রসেস করতে পারিনি। অনুগ্রহ করে মডেল সেটিংস যাচাই করুন।',
+          : (isBangla
+              ? 'আমি আপনার অনুরোধটি প্রসেস করতে পারিনি। অনুগ্রহ করে মডেল সেটিংস যাচাই করুন।'
+              : 'I could not process your request. Please check model settings.'),
       sender: MessageSender.ai,
       timestamp: DateTime.now(),
     );

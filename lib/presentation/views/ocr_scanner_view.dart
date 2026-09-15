@@ -90,7 +90,7 @@ class OcrScannerView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                strings.isBangla ? '১০০% অফলাইন টেক্সট রিকগনিশন' : '100% Offline OCR Recognition',
+                                strings.offlineOcrHeader,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 13.5,
@@ -172,13 +172,13 @@ class OcrScannerView extends StatelessWidget {
                         color: theme.cardTheme.color,
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const Column(
+                      child: Column(
                         children: [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 16),
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: 16),
                           Text(
-                            'ছবি থেকে অফলাইনে লেখা স্ক্যান করা হচ্ছে...',
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                            strings.scanningImage,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -203,7 +203,7 @@ class OcrScannerView extends StatelessWidget {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              state.errorMessage ?? 'ছবিতে কোনো স্পষ্ট লেখা পাওয়া যায়নি। লেখা সম্বলিত ছবি দিন।',
+                              state.errorMessage ?? strings.noOcrText,
                               style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
                             ),
                           ),
@@ -281,9 +281,7 @@ class OcrScannerView extends StatelessWidget {
                       onPressed: () => _sendToAiEditor(context, state.extractedText!, AiTaskType.ocrStructuring),
                       icon: const Icon(Icons.auto_fix_normal_rounded, size: 20),
                       label: Text(
-                        strings.isBangla
-                            ? '⚡ AI দিয়ে টেক্সট সাজান ও ক্লিন করুন'
-                            : '⚡ Clean & Structure with AI',
+                        strings.cleanWithAi,
                         style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14.5),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -298,9 +296,7 @@ class OcrScannerView extends StatelessWidget {
 
                     // Quick AI Actions on Scanned Text
                     Text(
-                      strings.isBangla
-                          ? 'AI দিয়ে ঠিক করুন (এক ক্লিকে এডিটর খুলুন):'
-                          : 'Fix with AI (Open in Editor):',
+                      strings.fixWithAiTitle,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
@@ -314,7 +310,7 @@ class OcrScannerView extends StatelessWidget {
                       children: AiTaskType.values.map((task) {
                         return ActionChip(
                           avatar: Icon(task.icon, size: 16, color: task.badgeColor),
-                          label: Text(task.title),
+                          label: Text(strings.isBangla ? task.banglaTitle : task.title),
                           backgroundColor: task.badgeColor.withAlpha(20),
                           side: BorderSide(color: task.badgeColor.withAlpha(60)),
                           onPressed: () => _sendToAiEditor(context, state.extractedText!, task),

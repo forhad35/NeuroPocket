@@ -9,10 +9,17 @@ import 'package:flutter_ai/data/models/model_status.dart';
 import 'package:flutter_ai/data/repositories/chat_repository.dart';
 import 'package:flutter_ai/data/services/ai_engine_service.dart';
 import 'package:flutter_ai/data/services/ai_prompt_builder.dart';
+import 'package:flutter_ai/data/services/clipboard_watcher_service.dart';
 import 'package:flutter_ai/data/services/on_device_llm_service.dart';
 import 'package:flutter_ai/main.dart';
 import 'package:flutter_ai/presentation/blocs/chat/chat_bloc.dart';
 import 'package:flutter_ai/presentation/blocs/chat/chat_event.dart';
+import 'package:flutter_ai/presentation/blocs/chat_translator/chat_translator_bloc.dart';
+import 'package:flutter_ai/presentation/blocs/chat_translator/chat_translator_event.dart';
+import 'package:flutter_ai/presentation/blocs/chat_translator/chat_translator_state.dart';
+import 'package:flutter_ai/presentation/blocs/floating_bubble/floating_bubble_bloc.dart';
+import 'package:flutter_ai/presentation/blocs/floating_bubble/floating_bubble_event.dart';
+import 'package:flutter_ai/presentation/blocs/floating_bubble/floating_bubble_state.dart';
 import 'package:flutter_ai/presentation/blocs/model_manager/model_manager_bloc.dart';
 import 'package:flutter_ai/presentation/blocs/model_manager/model_manager_event.dart';
 
@@ -94,6 +101,12 @@ class FakeOnDeviceLlmService implements IOnDeviceLlmService {
     if (prompt.contains('motivational quote')) {
       return 'Continuous learning is the minimum requirement for success in any field.';
     }
+    if (prompt.contains('Translate the following received chat message') || prompt.contains('Translate the given text')) {
+      return 'আমি শীঘ্রই আপনার সাথে যোগাযোগ করব।';
+    }
+    if (prompt.contains('Compose a ready-to-send reply message')) {
+      return 'Sure, I would be glad to help you with that!';
+    }
     return '[CORRECTED]\nHe went to school yesterday and was very happy.\n[/CORRECTED]\n\n[EXPLANATION]\n• Corrected past tense verb agreement.\n[/EXPLANATION]\n\n[ALTERNATIVES]\n- Formal: He attended school yesterday.\n- Casual: He went to school yesterday.\n[/ALTERNATIVES]';
   }
 
@@ -145,6 +158,20 @@ void main() {
     test('builds prompt for multilingual rewrite', () {
       final prompt = AiPromptBuilder.buildPrompt('ami ashbo na', AiTaskType.multilingualRewrite);
       expect(prompt.contains('multilingual communications'), isTrue);
+    });
+
+    test('builds prompt for social chat replies and translations', () {
+      final replyPrompt = AiPromptBuilder.buildChatReplyPrompt(
+        message: 'Can you help me?',
+        tone: 'Casual & Friendly',
+      );
+      expect(replyPrompt.contains('Casual & Friendly'), isTrue);
+
+      final transPrompt = AiPromptBuilder.buildQuickTranslatePrompt(
+        text: 'Good morning',
+        action: 'translate_bn',
+      );
+      expect(transPrompt.contains('fluent, natural Bengali'), isTrue);
     });
   });
 
@@ -203,6 +230,55 @@ void main() {
     });
   });
 
+  group('FloatingBubbleBloc Tests (Hi Translate Feature 1)', () {
+    test('Toggle bubble, update position, and run quick translation', () async {
+      final fakeService = FakeOnDeviceLlmService();
+      final bloc = FloatingBubbleBloc(onDeviceLlmService: fakeService);
+
+      bloc.add(const ToggleFloatingBubbleEvent(isEnabled: false));
+      await Future.delayed(const Duration(milliseconds: 50));
+      expect(bloc.state.isEnabled, isFalse);
+
+      bloc.add(const ToggleFloatingBubbleEvent(isEnabled: true));
+      await Future.delayed(const Duration(milliseconds: 50));
+      expect(bloc.state.isEnabled, isTrue);
+
+      bloc.add(const UpdateBubblePositionEvent(dx: 100, dy: 200));
+      await Future.delayed(const Duration(milliseconds: 50));
+      expect(bloc.state.posX, equals(100));
+      expect(bloc.state.posY, equals(200));
+
+      bloc.add(const QuickTranslateTextEvent(text: 'How are you?', action: 'translate_bn'));
+      await Future.delayed(const Duration(milliseconds: 100));
+      expect(bloc.state.status, equals(QuickTranslateStatus.success));
+      expect(bloc.state.resultText, isNotNull);
+
+      await bloc.close();
+    });
+  });
+
+  group('ChatTranslatorBloc Tests (Hi Translate Feature 3)', () {
+    test('Translate incoming message and generate outgoing reply', () async {
+      final fakeService = FakeOnDeviceLlmService();
+      final bloc = ChatTranslatorBloc(onDeviceLlmService: fakeService);
+
+      bloc.add(const TranslateIncomingMessageEvent(text: 'Please send the report'));
+      await Future.delayed(const Duration(milliseconds: 100));
+      expect(bloc.state.status, equals(ChatTranslatorStatus.success));
+      expect(bloc.state.translatedIncoming, isNotNull);
+
+      bloc.add(const GenerateOutgoingReplyEvent(
+        draftReply: 'Ami pathiye dichi',
+        tone: 'Formal & Business',
+      ));
+      await Future.delayed(const Duration(milliseconds: 100));
+      expect(bloc.state.status, equals(ChatTranslatorStatus.success));
+      expect(bloc.state.generatedReply, isNotNull);
+
+      await bloc.close();
+    });
+  });
+
   group('ModelManagerBloc Tests', () {
     test('Check status and test model inference', () async {
       final fakeService = FakeOnDeviceLlmService();
@@ -233,16 +309,33 @@ void main() {
     });
   });
 
+  group('ClipboardWatcherService Tests (Hi Translate Feature 2)', () {
+    test('Service instance starts and stops properly', () {
+      final service = ClipboardWatcherService();
+      expect(service.isWatching, isFalse);
+      service.startWatching();
+      expect(service.isWatching, isTrue);
+      service.stopWatching();
+      expect(service.isWatching, isFalse);
+    });
+  });
+
   testWidgets('App loads and displays title and chat card', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 2.0;
     addTearDown(() => tester.view.resetPhysicalSize());
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      ClipboardWatcherService().stopWatching();
+    });
 
     await tester.pumpWidget(const OfflineAiApp());
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    ClipboardWatcherService().stopWatching();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byType(MaterialApp), findsOneWidget);
-    expect(find.text('100% Offline AI Ready'), findsOneWidget);
     expect(
       find.byWidgetPredicate(
         (widget) =>

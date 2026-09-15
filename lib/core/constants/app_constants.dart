@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppConstants {
   static const String appName = 'NeuroPocket';
   static const String appTagline = '100% On-Device AI Writing & OCR';
+  static final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
   // Available local models
   static const String defaultModelName = 'Llama-3.2-1B-Instruct (Q4_K_M)';

@@ -98,8 +98,8 @@ class OnDeviceLlmService implements IOnDeviceLlmService {
       bestFor: 'Lightweight phones, fast English proofreading, and vocabulary cleanup.',
       banglaBestFor: 'কম কনফিগারেশনের ফোন, দ্রুত ইংরেজি প্রুফরিডিং এবং স্পেলিং ফিক্স।',
       downloadUrl:
-          'https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct-GGUF/resolve/main/smollm2-360m-instruct-q4_k_m.gguf',
-      fileName: 'smollm2-360m-instruct-q4_k_m.gguf',
+          'https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF/resolve/main/SmolLM2-360M-Instruct-Q4_K_M.gguf',
+      fileName: 'SmolLM2-360M-Instruct-Q4_K_M.gguf',
     ),
     LocalModelInfo(
       id: 'llama-3.2-1b',

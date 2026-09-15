@@ -181,5 +181,65 @@ class AppStrings {
   String get deleteConfirm => isBangla
       ? 'আপনি কি নিশ্চিত যে এই মডেলটি ডিভাইস থেকে মুছে ফেলতে চান?'
       : 'Are you sure you want to delete this model from disk?';
+
+  // Floating Translation Bubble
+  String get floatingBubbleTitle => isBangla ? 'ভাসমান বল (Floating Bubble)' : 'Floating Translation Ball';
+  String get floatingBubbleSubtitle => isBangla
+      ? 'অন্যান্য অ্যাপ ব্যবহারের সময় সহজে অনুবাদ ও গ্রামার ফিক্স করার জন্য ভাসমান বল'
+      : 'Quick on-screen bubble for instant translation and grammar fix anywhere';
+  String get floatingBubbleToggle => isBangla ? 'ভাসমান বল চালু রাখুন' : 'Enable Floating Bubble';
+  String get quickTranslateTitle => isBangla ? 'কুইক ট্রান্সলেটর ও গ্রামার ফিক্স' : 'Quick Translator & Fixer';
+  String get quickTranslateHint => isBangla
+      ? 'এখানে বাক্য লিখুন বা পেস্ট করুন...'
+      : 'Type or paste sentence to translate/fix...';
+  String get quickTranslateInputHint => isBangla
+      ? 'বাক্য লিখুন বা পেস্ট করুন...'
+      : 'Type or paste sentence...';
+  String get quickTranslatePaste => isBangla ? 'পেস্ট' : 'Paste';
+  String get quickTranslating => isBangla ? 'অনুবাদ হচ্ছে...' : 'Translating...';
+  String get quickTranslateCopied => isBangla ? 'কপি হয়েছে!' : 'Copied!';
+  String get quickTranslateAction => isBangla ? 'অনুবাদ করুন' : 'Translate';
+  String get quickFixAction => isBangla ? 'গ্রামার ঠিক করুন' : 'Fix Grammar';
+  String get quickPolishAction => isBangla ? 'সুন্দর করুন' : 'Polish Tone';
+  String get translateFromEnToBn => isBangla ? 'ইংরেজি ➔ বাংলা' : 'English ➔ Bengali';
+  String get translateFromBnToEn => isBangla ? 'বাংলা ➔ ইংরেজি' : 'Bengali ➔ English';
+  String get autoDetect => isBangla ? 'অটো ডিটেক্ট' : 'Auto Detect';
+  String get hideBubble => isBangla ? 'বল হাইড করুন' : 'Hide Bubble';
+
+  // Clipboard Watcher & Quick Bar
+  String get clipboardDetectedTitle => isBangla ? 'ক্লিপবোর্ডে নতুন লেখা শনাক্ত হয়েছে' : 'Copied Text Detected';
+  String get clipboardTranslate => isBangla ? 'অনুবাদ' : 'Translate';
+  String get clipboardGrammarFix => isBangla ? 'গ্রামার ফিক্স' : 'Fix Grammar';
+  String get clipboardProfessional => isBangla ? 'প্রফেশনাল' : 'Make Polite';
+  String get clipboardDismiss => isBangla ? 'মুছে ফেলুন' : 'Dismiss';
+  String get copiedToClipboardToast => isBangla ? 'ফলাফল ক্লিপবোর্ডে কপি করা হয়েছে!' : 'Result copied to clipboard!';
+  String get clipboardWatcherSettingsTitle => isBangla ? 'ক্লিপবোর্ড অটো-অ্যাকশন' : 'Clipboard Auto-Actions';
+  String get clipboardWatcherSettingsSubtitle => isBangla
+      ? 'কোনো লেখা কপি করলেই সাথে সাথে কুইক ট্রান্সলেশন বার দেখাবে'
+      : 'Show quick action bar whenever text is copied to clipboard';
+
+  // Smart Chat Translator
+  String get chatTranslatorTitle => isBangla ? 'স্মার্ট চ্যাট ট্রান্সলেটর' : 'Smart Chat Translator';
+  String get chatTranslatorSubtitle => isBangla
+      ? 'হোয়াটসঅ্যাপ, মেসেঞ্জার ও সোশ্যাল চ্যাটের জন্য রিয়েল-টাইম অনুবাদ ও রিপ্লাই'
+      : 'Real-time message translation & tone-perfect replies for WhatsApp & social chat';
+  String get incomingMessageTitle => isBangla ? 'ইনকামিং মেসেজ (আসা মেসেজ)' : 'Incoming Message (Received)';
+  String get incomingPlaceholder => isBangla
+      ? 'অন্যের পাঠানো ইংরেজি বা বিদেশি মেসেজ এখানে পেস্ট করুন...'
+      : 'Paste received message in English or any language...';
+  String get translateIncomingBtn => isBangla ? 'বাংলায় অর্থ দেখুন' : 'Translate Incoming Message';
+  String get outgoingReplyTitle => isBangla ? 'আপনার রিপ্লাই (উত্তর কম্পোজার)' : 'Your Reply (Outgoing)';
+  String get outgoingPlaceholder => isBangla
+      ? 'আপনার উত্তর বাংলায় বা বাংলিশে লিখুন (যেমন: আমি কালকে আসবো)...'
+      : 'Type your reply in Bengali, Banglish, or English...';
+  String get generateReplyBtn => isBangla ? 'পারফেক্ট রিপ্লাই তৈরি করুন' : 'Generate Fluent Reply';
+  String get selectToneTitle => isBangla ? 'রিপ্লাইয়ের টোন (ধরণ):' : 'Select Tone / Style:';
+  String get toneCasual => isBangla ? '💬 ক্যাজুয়াল / ফ্রেন্ডলি' : '💬 Casual & Friendly';
+  String get toneFormal => isBangla ? '💼 ফর্মাল / অফিসিয়াল' : '💼 Formal & Business';
+  String get tonePolite => isBangla ? '🤝 অত্যন্ত বিনম্র' : '🤝 Highly Polite';
+  String get toneConcise => isBangla ? '⚡ সংক্ষিপ্ত ও স্পষ্ট' : '⚡ Short & Direct';
+  String get quickChatTemplates => isBangla ? 'কুইক চ্যাট টেমপ্লেট:' : 'Quick Chat Templates:';
+  String get copyReply => isBangla ? 'রিপ্লাই কপি করুন' : 'Copy Reply';
+  String get shareReply => isBangla ? 'শেয়ার করুন' : 'Share';
 }
 

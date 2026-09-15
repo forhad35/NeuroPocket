@@ -89,4 +89,8 @@ enum AiTaskType {
     required this.icon,
     required this.badgeColor,
   });
+
+  String localizedTitle(bool isBangla) => isBangla ? banglaTitle : title;
+  String localizedSubtitle(bool isBangla) => isBangla ? banglaSubtitle : subtitle;
+  String localizedDescription(bool isBangla) => isBangla ? banglaDescription : description;
 }

@@ -8,6 +8,7 @@ class AiPromptBuilder {
         return '''
 <|system|>
 You are an expert English grammar proofreader and linguistic editor.
+You are an expert English and Bengali grammar proofreader and linguistic editor.
 Task: Analyze the input text for grammar, spelling, punctuation, and subject-verb agreement errors.
 Rules:
 1. Provide the corrected text directly under "[CORRECTED]".
@@ -115,6 +116,92 @@ Format required:
 Input:
 "$input"
 
+<|assistant|>
+''';
+    }
+  }
+
+  /// Builds prompt for social chat reply generation with specific tone
+  static String buildChatReplyPrompt({
+    required String message,
+    required String tone,
+    bool isBanglaTarget = false,
+  }) {
+    final targetLangDesc = isBanglaTarget ? 'Bengali (বাংলা)' : 'Natural English';
+    return '''
+<|system|>
+You are a smart social chat and messaging assistant.
+Task: Compose a ready-to-send reply message in $targetLangDesc matching the specified tone: "$tone".
+Rules:
+1. Provide only the polished reply message directly without prefixes or explanations.
+2. Keep it natural, conversational, and appropriate for messaging apps (WhatsApp, Messenger, Slack).
+
+<|user|>
+Draft / Idea: "$message"
+Tone: "$tone"
+
+<|assistant|>
+''';
+  }
+
+  /// Builds prompt for translating incoming chat message
+  static String buildIncomingTranslationPrompt({
+    required String message,
+    bool toBangla = true,
+  }) {
+    final targetLang = toBangla ? 'Bengali (বাংলা)' : 'English';
+    return '''
+<|system|>
+You are an expert real-time chat translator.
+Task: Translate the following received chat message accurately and naturally into $targetLang.
+Rules:
+1. Output the direct translation clearly.
+2. If idioms, slang, or nuances are present, provide a brief friendly note.
+
+<|user|>
+Message: "$message"
+
+<|assistant|>
+''';
+  }
+
+  /// Quick translation & fix for floating ball / clipboard bar
+  static String buildQuickTranslatePrompt({
+    required String text,
+    required String action, // 'translate_bn', 'translate_en', 'fix_grammar', 'polish'
+  }) {
+    switch (action) {
+      case 'translate_bn':
+        return '''
+<|system|>
+Translate the given text into fluent, natural Bengali (বাংলা). Output ONLY the translated text.
+<|user|>
+Text: "$text"
+<|assistant|>
+''';
+      case 'translate_en':
+        return '''
+<|system|>
+Translate the given text into fluent, natural English. Output ONLY the translated text.
+<|user|>
+Text: "$text"
+<|assistant|>
+''';
+      case 'fix_grammar':
+        return '''
+<|system|>
+Fix all grammar, spelling, punctuation and sentence structure mistakes in this text. Output ONLY the corrected text.
+<|user|>
+Text: "$text"
+<|assistant|>
+''';
+      case 'polish':
+      default:
+        return '''
+<|system|>
+Rewrite this text to be polite, polished, and professional. Output ONLY the refined text.
+<|user|>
+Text: "$text"
 <|assistant|>
 ''';
     }

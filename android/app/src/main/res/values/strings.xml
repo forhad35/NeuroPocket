@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NeuroPocket</string>
+    <string name="accessibility_service_description">Enables NeuroPocket to drag-to-translate and detect on-screen text in any app like WhatsApp, Messenger, and web browsers.</string>
+</resources>
+

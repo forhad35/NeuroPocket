@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/localization/app_strings.dart';
 import '../../data/services/clipboard_watcher_service.dart';
-import 'floating_bubble_overlay.dart';
+import 'quick_translate_modal.dart';
 
 class ClipboardQuickBar extends StatefulWidget {
   final Widget child;
@@ -155,7 +155,7 @@ class _ClipboardQuickBarState extends State<ClipboardQuickBar> with SingleTicker
                               onTap: () {
                                 final text = _detectedText!;
                                 _dismissBar();
-                                 FloatingBubbleOverlay.showCardForText(text);
+                                QuickTranslateModal.showCardForText(text);
                               },
                             ),
                             const SizedBox(width: 8),
@@ -166,7 +166,7 @@ class _ClipboardQuickBarState extends State<ClipboardQuickBar> with SingleTicker
                               onTap: () {
                                 final text = _detectedText!;
                                 _dismissBar();
-                                FloatingBubbleOverlay.showCardForText(text);
+                                QuickTranslateModal.showCardForText(text);
                               },
                             ),
                             const SizedBox(width: 8),
@@ -177,7 +177,7 @@ class _ClipboardQuickBarState extends State<ClipboardQuickBar> with SingleTicker
                               onTap: () {
                                 final text = _detectedText!;
                                 _dismissBar();
-                                FloatingBubbleOverlay.showCardForText(text);
+                                QuickTranslateModal.showCardForText(text);
                               },
                             ),
                           ],

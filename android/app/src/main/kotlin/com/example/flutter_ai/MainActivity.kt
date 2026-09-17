@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.TextUtils
 import io.flutter.embedding.android.FlutterActivity
@@ -11,12 +13,39 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "com.example.flutter_ai/accessibility"
+
+    companion object {
+        const val CHANNEL_NAME = "com.example.flutter_ai/accessibility"
+        private var methodChannel: MethodChannel? = null
+        private val mainHandler = Handler(Looper.getMainLooper())
+
+        fun requestAiTranslation(text: String, callback: (String) -> Unit) {
+            val ch = methodChannel ?: return
+            mainHandler.post {
+                try {
+                    ch.invokeMethod("translateWithAi", mapOf("text" to text), object : MethodChannel.Result {
+                        override fun success(result: Any?) {
+                            val translated = result as? String
+                            if (!translated.isNullOrBlank()) {
+                                callback(translated.trim())
+                            }
+                        }
+                        override fun error(errorCode: String, errorMessage: String?, errorDetails: Any?) {}
+                        override fun notImplemented() {}
+                    })
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        val channel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL_NAME)
+        methodChannel = channel
 
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
+        channel.setMethodCallHandler { call, result ->
             when (call.method) {
                 "isAccessibilityEnabled" -> {
                     result.success(isAccessibilityServiceEnabled(this, NeuroAccessibilityService::class.java))
@@ -76,6 +105,13 @@ class MainActivity : FlutterActivity() {
                 else -> result.notImplemented()
             }
         }
+    }
+
+    override fun onDestroy() {
+        if (methodChannel != null) {
+            methodChannel = null
+        }
+        super.onDestroy()
     }
 
     private fun isAccessibilityServiceEnabled(

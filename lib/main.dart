@@ -18,7 +18,6 @@ import 'presentation/blocs/model_manager/model_manager_bloc.dart';
 import 'presentation/blocs/ocr/ocr_bloc.dart';
 import 'presentation/views/home_view.dart';
 import 'presentation/widgets/clipboard_quick_bar.dart';
-import 'presentation/widgets/floating_bubble_overlay.dart';
 
 void main() {
   if (kDebugMode) {
@@ -48,6 +47,7 @@ class _OfflineAiAppState extends State<OfflineAiApp> with WidgetsBindingObserver
     _aiRepository = AiRepository();
     _ocrRepository = OcrRepository();
     _chatRepository = ChatRepository();
+    AccessibilityServiceHelper.initializeAiBridge(aiRepository: _aiRepository);
     _syncFloatingOverlay();
   }
 
@@ -109,14 +109,7 @@ class _OfflineAiAppState extends State<OfflineAiApp> with WidgetsBindingObserver
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        builder: (context, child) {
-          if (child == null) return const SizedBox.shrink();
-          return FloatingBubbleOverlay(
-            child: ClipboardQuickBar(
-              child: child,
-            ),
-          );
-        },
+        builder: (context, child) => ClipboardQuickBar(child: child ?? const SizedBox.shrink()),
         home: const HomeView(),
       ),
     );

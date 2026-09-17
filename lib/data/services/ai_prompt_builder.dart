@@ -168,36 +168,21 @@ Message: "$message"
   /// Quick translation & fix for floating ball / clipboard bar
   static String buildQuickTranslatePrompt({
     required String text,
-    required String action, // 'translate_bn', 'translate_en', 'fix_grammar', 'polish'
+    String? targetLanguage,
+    String action = 'translate_bn', // 'translate_bn', 'translate_en', 'fix_grammar', 'polish'
   }) {
-    switch (action) {
-      case 'translate_bn':
-        return '''
-<|system|>
-Translate the given text into fluent, natural Bengali (বাংলা). Output ONLY the translated text.
-<|user|>
-Text: "$text"
-<|assistant|>
-''';
-      case 'translate_en':
-        return '''
-<|system|>
-Translate the given text into fluent, natural English. Output ONLY the translated text.
-<|user|>
-Text: "$text"
-<|assistant|>
-''';
-      case 'fix_grammar':
-        return '''
+    if (action == 'fix_grammar') {
+      return '''
 <|system|>
 Fix all grammar, spelling, punctuation and sentence structure mistakes in this text. Output ONLY the corrected text.
 <|user|>
 Text: "$text"
 <|assistant|>
 ''';
-      case 'polish':
-      default:
-        return '''
+    }
+
+    if (action == 'polish') {
+      return '''
 <|system|>
 Rewrite this text to be polite, polished, and professional. Output ONLY the refined text.
 <|user|>
@@ -205,6 +190,28 @@ Text: "$text"
 <|assistant|>
 ''';
     }
+
+    // Determine target language (Smart auto-switch if text is already Bengali)
+    String effectiveLang = targetLanguage ?? 'Bengali (বাংলা)';
+    final hasBengaliChars = RegExp(r'[\u0980-\u09FF]').hasMatch(text);
+    if (hasBengaliChars && (action == 'translate_bn' || effectiveLang.contains('Bengali') || effectiveLang.contains('বাংলা'))) {
+      effectiveLang = 'English';
+    } else if (action == 'translate_en') {
+      effectiveLang = 'English';
+    }
+
+    return '''
+<|system|>
+You are a direct, fluent human translator.
+Task: Translate the given text into natural $effectiveLang.
+Rules:
+1. Output ONLY the pure translated sentence.
+2. Never output meta labels like "ইনপুট:", "উত্তর:", "Translation:", "Output:", quotes, or explanations.
+3. Keep brand names (like Google, Gemini, Play Store) natural and do not phonetically corrupt them.
+<|user|>
+$text
+<|assistant|>
+''';
   }
 }
 

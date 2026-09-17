@@ -22,6 +22,10 @@ class QuickTranslateModal extends StatefulWidget {
     }
   }
 
+  static void showCardForText(String text) {
+    show(initialText: text);
+  }
+
   static Future<void> show({BuildContext? context, String? initialText}) async {
     if (_isOpen) {
       return;

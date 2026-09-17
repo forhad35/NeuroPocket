@@ -55,6 +55,64 @@ class AiConfigService {
     }
   }
 
+  static const String _keyTargetLanguage = 'translation_target_language';
+  static const String _keyAutoDetectLang = 'translation_auto_detect';
+  static const String defaultTargetLanguage = 'Bengali (বাংলা)';
+
+  static const List<Map<String, String>> supportedLanguages = [
+    {'code': 'bn', 'name': 'Bengali (বাংলা)', 'flag': '🇧🇩'},
+    {'code': 'en', 'name': 'English', 'flag': '🇺🇸'},
+    {'code': 'hi', 'name': 'Hindi (हिन्दी)', 'flag': '🇮🇳'},
+    {'code': 'ar', 'name': 'Arabic (العربية)', 'flag': '🇸🇦'},
+    {'code': 'es', 'name': 'Spanish (Español)', 'flag': '🇪🇸'},
+    {'code': 'fr', 'name': 'French (Français)', 'flag': '🇫🇷'},
+    {'code': 'de', 'name': 'German (Deutsch)', 'flag': '🇩🇪'},
+    {'code': 'ja', 'name': 'Japanese (日本語)', 'flag': '🇯🇵'},
+    {'code': 'zh', 'name': 'Chinese (中文)', 'flag': '🇨🇳'},
+    {'code': 'ur', 'name': 'Urdu (اردو)', 'flag': '🇵🇰'},
+  ];
+
+  static String _memoryTargetLanguage = defaultTargetLanguage;
+  static bool _memoryAutoDetect = true;
+
+  static Future<String> getTargetLanguage() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString(_keyTargetLanguage) ?? _memoryTargetLanguage;
+    } catch (e) {
+      return _memoryTargetLanguage;
+    }
+  }
+
+  static Future<void> saveTargetLanguage(String language) async {
+    _memoryTargetLanguage = language;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_keyTargetLanguage, language);
+    } catch (e) {
+      debugPrint('Error saving target language: $e');
+    }
+  }
+
+  static Future<bool> isAutoDetectEnabled() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getBool(_keyAutoDetectLang) ?? _memoryAutoDetect;
+    } catch (e) {
+      return _memoryAutoDetect;
+    }
+  }
+
+  static Future<void> saveAutoDetectEnabled(bool enabled) async {
+    _memoryAutoDetect = enabled;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_keyAutoDetectLang, enabled);
+    } catch (e) {
+      debugPrint('Error saving auto detect: $e');
+    }
+  }
+
   static Future<bool> isRealModelEnabled() async {
     final key = await getApiKey();
     return key != null && key.isNotEmpty;

@@ -7,7 +7,7 @@ import '../blocs/floating_bubble/floating_bubble_bloc.dart';
 import '../blocs/floating_bubble/floating_bubble_event.dart';
 import '../blocs/floating_bubble/floating_bubble_state.dart';
 import '../widgets/language_switch_button.dart';
-import '../widgets/floating_bubble_overlay.dart';
+import '../widgets/quick_translate_modal.dart';
 import '../widgets/system_permission_card.dart';
 import '../../data/services/screen_text_scanner.dart';
 import 'ai_editor_view.dart';
@@ -75,7 +75,7 @@ class HomeView extends StatelessWidget {
           IconButton(
             tooltip: strings.quickTranslateTitle,
             icon: const Icon(Icons.bolt_rounded),
-            onPressed: () => FloatingBubbleOverlay.showCardForText(''),
+            onPressed: () => QuickTranslateModal.showCardForText(''),
           ),
           IconButton(
             tooltip: strings.navSettings,

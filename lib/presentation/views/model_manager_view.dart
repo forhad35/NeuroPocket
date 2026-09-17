@@ -23,6 +23,8 @@ class _ModelManagerViewState extends State<ModelManagerView> {
     text: 'What are the main benefits of on-device AI?',
   );
   String _selectedGeminiModel = 'gemini-1.5-flash';
+  String _selectedTargetLang = AiConfigService.defaultTargetLanguage;
+  bool _autoDetectLang = true;
   bool _obscureKey = true;
   bool _isTestingKey = false;
   String? _testResult;
@@ -44,10 +46,14 @@ class _ModelManagerViewState extends State<ModelManagerView> {
   Future<void> _loadConfig() async {
     final key = await AiConfigService.getApiKey();
     final model = await AiConfigService.getModelName();
+    final targetLang = await AiConfigService.getTargetLanguage();
+    final autoDetect = await AiConfigService.isAutoDetectEnabled();
     if (mounted) {
       setState(() {
         _apiKeyController.text = key ?? '';
         _selectedGeminiModel = model;
+        _selectedTargetLang = targetLang;
+        _autoDetectLang = autoDetect;
       });
     }
   }
@@ -289,6 +295,107 @@ class _ModelManagerViewState extends State<ModelManagerView> {
           ),
           const SizedBox(height: 14),
           const LanguageSwitchButton(compact: false),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Divider(height: 1),
+          ),
+          // Target Language Selection for Screen / Lens Translation
+          Row(
+            children: [
+              const Icon(
+                Icons.translate_rounded,
+                color: AppConstants.accentColor,
+                size: 18,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  strings.isBangla
+                      ? 'অন-স্ক্রিন অনুবাদ টার্গেট ভাষা (Target Language)'
+                      : 'On-Screen Translation Target Language',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              color: theme.scaffoldBackgroundColor,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: theme.dividerColor.withAlpha(50),
+              ),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: _selectedTargetLang,
+                isExpanded: true,
+                icon: const Icon(Icons.arrow_drop_down_rounded),
+                items: AiConfigService.supportedLanguages.map((lang) {
+                  return DropdownMenuItem<String>(
+                    value: lang['name'],
+                    child: Row(
+                      children: [
+                        Text(lang['flag'] ?? '🌐', style: const TextStyle(fontSize: 16)),
+                        const SizedBox(width: 8),
+                        Text(lang['name'] ?? '', style: const TextStyle(fontSize: 13)),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                onChanged: (val) async {
+                  if (val != null) {
+                    setState(() => _selectedTargetLang = val);
+                    await AiConfigService.saveTargetLanguage(val);
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            strings.isBangla
+                                ? 'অনুবাদ ভাষা "$val" সেভ করা হয়েছে'
+                                : 'Target language set to "$val"',
+                          ),
+                          duration: const Duration(seconds: 2),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    }
+                  }
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Auto Detect Switch
+          SwitchListTile.adaptive(
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              strings.isBangla
+                  ? 'স্বয়ংক্রিয় ভাষা সুইচ (Smart Auto-Switch)'
+                  : 'Smart Auto-Switch Language',
+              style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w500),
+            ),
+            subtitle: Text(
+              strings.isBangla
+                  ? 'বাংলা টেক্সট হলে ইংরেজিতে এবং ইংরেজি হলে পছন্দের ভাষায় অনুবাদ হবে'
+                  : 'Translates Bengali to English & English to selected target',
+              style: TextStyle(
+                fontSize: 11,
+                color: theme.textTheme.bodyMedium?.color?.withAlpha(140),
+              ),
+            ),
+            value: _autoDetectLang,
+            activeTrackColor: AppConstants.accentColor,
+            onChanged: (val) async {
+              setState(() => _autoDetectLang = val);
+              await AiConfigService.saveAutoDetectEnabled(val);
+            },
+          ),
         ],
       ),
     );

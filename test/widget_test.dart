@@ -172,6 +172,7 @@ void main() {
         action: 'translate_bn',
       );
       expect(transPrompt.contains('fluent, natural Bengali'), isTrue);
+      expect(transPrompt.contains('natural Bengali'), isTrue);
     });
   });
 

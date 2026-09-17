@@ -8,7 +8,7 @@ import '../blocs/chat_translator/chat_translator_bloc.dart';
 import '../blocs/chat_translator/chat_translator_event.dart';
 import '../blocs/chat_translator/chat_translator_state.dart';
 import '../widgets/language_switch_button.dart';
-import '../widgets/floating_bubble_overlay.dart';
+import '../widgets/quick_translate_modal.dart';
 import '../../data/services/screen_text_scanner.dart';
 
 class ChatTranslatorView extends StatefulWidget {
@@ -610,7 +610,7 @@ class _ChatTranslatorViewState extends State<ChatTranslatorView> {
       text: text,
       child: InkWell(
         onTap: () {
-          FloatingBubbleOverlay.showCardForText(text);
+          QuickTranslateModal.showCardForText(text);
         },
         borderRadius: BorderRadius.circular(14),
         child: Container(
